@@ -27,10 +27,7 @@ class OrderHistoryRow extends Component {
     let dateYear = orderHistory.order_date.substring(0, 4)
     let dateMonth = orderHistory.order_date.substring(5, 7)
     let dateDay = orderHistory.order_date.substring(8, 10)
-    console.log("orderHistory.order_date ===>", orderHistory.order_date)
-    console.log("dateYear ===>", dateYear)
-    console.log("dateMonth ===>", dateMonth)
-    console.log("dateDay ===>", dateDay)
+    
     return (
         <List>
             {orderhistorycartitemRow}

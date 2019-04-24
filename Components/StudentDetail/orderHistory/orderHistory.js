@@ -33,7 +33,7 @@ class studentOrderHistory extends Component {
     let OrderHistory = this.props.orderHistory
     let OrderHistoryObj =[]
     if (OrderHistory){
-      OrderHistoryObj = OrderHistory.map(OrderHistory => <OrderHistoryRow orderHistory={OrderHistory} key={OrderHistory.order_date}/>)
+      OrderHistoryObj = OrderHistory.map(OrderHistory => <OrderHistoryRow orderHistory={OrderHistory} key={OrderHistory.id}/>)
     }
     return (
         <List>

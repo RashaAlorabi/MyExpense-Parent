@@ -24,9 +24,9 @@ class Login extends Component {
   };
 
   render() {
-    if (this.props.user) {
-      this.props.navigation.replace("ParentProfile");
-    }
+    // if (this.props.user) {
+    //   this.props.navigation.replace("ParentProfile");
+    // }
     return (
       <Content>
         <Header transparent />

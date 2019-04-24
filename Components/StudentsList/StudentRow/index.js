@@ -20,7 +20,6 @@ class StudentRow extends Component {
 
   render() {
     let student = this.props.student;
-
     return (
       <Card>
         <CardItem

@@ -31,7 +31,7 @@ class ParentProfile extends Component {
           <CardItem>
             <Body>
               <CardItem>
-                <Thumbnail source={{ uri: parent.image }} />
+                <Thumbnail source={parent.image ? { uri: parent.image } : {uri:"https://image.flaticon.com/icons/png/512/97/97895.png"}} />
               </CardItem>
 
               <CardItem>

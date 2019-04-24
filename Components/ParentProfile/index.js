@@ -26,7 +26,6 @@ class ParentProfile extends Component {
       return (parent = <Text />);
     } else {
       parent = this.props.parent;
-      console.log("profile", this.state.wallet);
       return (
         <Card>
           <CardItem>

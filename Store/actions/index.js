@@ -4,3 +4,7 @@ export {
   updateParentWallet,
   updateStudentLimit
 } from "./parentAction";
+
+export {
+  saveOrderHistory
+} from "./orderHistory";

@@ -4,6 +4,7 @@ const initialState = {
   parent: {
     wallet: ""
   },
+  orderHistory:[],
   loading: true
 };
 
@@ -32,6 +33,11 @@ const classReducer = (state = initialState, action) => {
         parent: { ...state.parent },
         loading: false
       };
+    case actionTypes.ORDER_HISTORY:
+    return {
+      ...state,
+      orderHistory:action.payload
+    };
     default:
       return state;
   }

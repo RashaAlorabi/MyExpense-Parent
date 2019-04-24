@@ -20,7 +20,6 @@ class StudentsList extends Component {
 
   render() {
     let studentRow;
-
     if (this.props.loading) {
       studentRow = <Text />;
     } else {

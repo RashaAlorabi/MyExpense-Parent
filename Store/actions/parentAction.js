@@ -58,3 +58,31 @@ export const updateStudentLimit = (studentDate, studentLmit) => {
     }
   };
 };
+
+export const notAlowedItems = (items, studentId) => {
+  return async dispatch => {
+    try {
+      const res = await instance.put(`parent/${studentId}/x_items/`, {
+        not_allowed: items
+      });
+      const itemsList = res.data;
+      dispatch({
+        type: actionTypes.NOT_ALLOWED_ITEMS,
+        payload: itemsList.not_allowed
+      });
+      dispatch(fetchParentProfile());
+    } catch (err) {
+      console.error("Error while adding not allowed items ", err);
+    }
+  };
+};
+
+export const fetchNotAlowedItems = items => {
+  return async dispatch => {
+    dispatch(fetchParentProfile());
+    dispatch({
+      type: actionTypes.NOT_ALLOWED_ITEMS,
+      payload: items
+    });
+  };
+};

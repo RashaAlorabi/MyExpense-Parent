@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../Store/actions";
-import { TextInput, } from "react-native";
+import { TextInput } from "react-native";
+import ItemList from "../ItemList";
 // NativeBase Components
 import {
   Thumbnail,
@@ -25,19 +26,25 @@ class StudentDetail extends Component {
       title: navigation.getParam("student").name
     };
   };
-  componentDidMount() {
+  async componentDidMount() {
     let studentORder = this.props.navigation.getParam("student");
-    if (studentORder.orders){
-      let OrderHistory = studentORder.orders.filter(order => order.paid)
-      this.props.saveOrderHistory(OrderHistory)
+    if (studentORder.orders) {
+      console.log("studentORder ===>", studentORder);
+      let OrderHistory = studentORder.orders.filter(order => order.paid);
+      this.props.saveOrderHistory(OrderHistory);
     }
+    // if (studentORder.not_allowed) {
+    //   let xItemsID = studentORder.not_allowed.map(item => item.id);
+    //   await this.props.fetchNotAlowedItems(xItemsID);
+    // }
   }
   state = {
     limit: null
   };
 
   render() {
-    let student = this.props.navigation.getParam("student");    
+    let student = this.props.navigation.getParam("student");
+    console.log(student, "student parent");
     return (
       <Content>
         <List>
@@ -109,10 +116,13 @@ class StudentDetail extends Component {
               <Text>update limit</Text>
             </Button>
           </ListItem>
+          <ItemList student={student} />
           <ListItem>
-          <Button
-          onPress={() => this.props.navigation.navigate("StudentOrderHistory")}
-          >
+            <Button
+              onPress={() =>
+                this.props.navigation.navigate("StudentOrderHistory")
+              }
+            >
               <Text>طلبات {student.name}</Text>
             </Button>
           </ListItem>
@@ -133,7 +143,10 @@ const mapDispatchToProps = dispatch => {
     fetchParentProfile: () => dispatch(actionCreators.fetchParentProfile()),
     updateStudentLimit: (studentDate, limit) =>
       dispatch(actionCreators.updateStudentLimit(studentDate, limit)),
-    saveOrderHistory: (OrderHistory) => dispatch(actionCreators.saveOrderHistory(OrderHistory)),
+    saveOrderHistory: OrderHistory =>
+      dispatch(actionCreators.saveOrderHistory(OrderHistory)),
+    fetchNotAlowedItems: items =>
+      dispatch(actionCreators.fetchNotAlowedItems(items))
   };
 };
 

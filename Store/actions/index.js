@@ -2,9 +2,9 @@ export { checkForExpiredToken, login, logout } from "./authActions";
 export {
   fetchParentProfile,
   updateParentWallet,
-  updateStudentLimit
+  updateStudentLimit,
+  notAlowedItems,
+  fetchNotAlowedItems
 } from "./parentAction";
 
-export {
-  saveOrderHistory
-} from "./orderHistory";
+export { saveOrderHistory } from "./orderHistory";

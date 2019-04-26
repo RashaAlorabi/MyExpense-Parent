@@ -5,7 +5,6 @@ import { TextInput } from "react-native";
 import ItemList from "../ItemList";
 // NativeBase Components
 import {
-  Thumbnail,
   Text,
   Button,
   Left,
@@ -17,7 +16,11 @@ import {
   Content,
   Spinner,
   Input,
-  Image
+  Image,
+  Card,
+  CardItem,
+  Thumbnail,
+  Icon
 } from "native-base";
 
 class StudentDetail extends Component {
@@ -47,86 +50,56 @@ class StudentDetail extends Component {
     console.log(student, "student parent");
     return (
       <Content>
-        <List>
+        <Card style={{ flex: 0 }}>
+          <CardItem>
+            <Left>
+              <Thumbnail source={{ uri: student.image }} />
+              <Body>
+                <Text> {student.name}</Text>
+                <Text note>{student.grade}</Text>
+                <Text note>
+                  limil {this.state.limit ? this.state.limit : student.limit}
+                </Text>
+              </Body>
+            </Left>
+          </CardItem>
+          <CardItem>
+            <ListItem>
+              <TextInput
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderColor: "gray",
+                  borderWidth: 1
+                }}
+                value={this.state.limit}
+                onChangeText={limit => this.setState({ limit })}
+              />
+              <Button
+                onPress={() => {
+                  this.props.updateStudentLimit(student, this.state.limit);
+                  this.setState({ state: this.state });
+                }}
+              >
+                <Icon name="pencil-square-o" type="FontAwesome" />
+              </Button>
+            </ListItem>
+          </CardItem>
           <ListItem>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 19,
-                fontWeight: "bold",
-                padding: 10
-              }}
-            >
-              {student.name}
-            </Text>
+            <ItemList student={student} />
           </ListItem>
-          <ListItem>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 19,
-                fontWeight: "bold",
-                padding: 10
-              }}
-            >
-              {student.grade}
-            </Text>
-          </ListItem>
-          <ListItem>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 19,
-                fontWeight: "bold",
-                padding: 10
-              }}
-            >
-              Health
-            </Text>
-            <Text>{student.health}</Text>
-          </ListItem>
-          <ListItem>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 19,
-                fontWeight: "bold",
-                padding: 10
-              }}
-            >
-              limil {this.state.limit ? this.state.limit : student.limit}
-            </Text>
-            <TextInput
-              style={{
-                width: 40,
-                height: 40,
-                borderColor: "gray",
-                borderWidth: 1
-              }}
-              value={this.state.limit}
-              onChangeText={limit => this.setState({ limit })}
-            />
-
-            <Button
-              onPress={() => {
-                this.props.updateStudentLimit(student, this.state.limit);
-                this.setState({ state: this.state });
-              }}
-            >
-              <Text>update limit</Text>
-            </Button>
-          </ListItem>
-          <ItemList student={student} />
-          <ListItem>
-            <Button
-              onPress={() =>
-                this.props.navigation.navigate("StudentOrderHistory")
-              }
-            >
-              <Text>طلبات {student.name}</Text>
-            </Button>
-          </ListItem>
-        </List>
+          <CardItem>
+            <ListItem>
+              <Button
+                onPress={() =>
+                  this.props.navigation.navigate("StudentOrderHistory")
+                }
+              >
+                <Text>طلبات {student.name}</Text>
+              </Button>
+            </ListItem>
+          </CardItem>
+        </Card>
       </Content>
     );
   }

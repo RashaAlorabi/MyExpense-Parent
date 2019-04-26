@@ -6,7 +6,8 @@ import * as actionTypes from "./actionTypes";
 // import { setErrors } from "./errors";
 
 const instance = axios.create({
-  baseURL: "http://127.0.0.1:8000/api"
+  // baseURL: "http://172.20.10.2:30/api"
+  baseURL: "http://127.0.0.1:8000/api/"
   //baseURL: "http://172.20.10.2:30/api"
   //baseURL: "http://172.20.10.4:30/api/"
   // baseURL: "http:// 192.168.8.146:30/api/"
@@ -50,7 +51,6 @@ export const checkForExpiredToken = () => {
 };
 /* -- login from api -- */
 export const login = (userData, navigation) => {
-  console.log("Treger")
   return async dispatch => {
     try {
       let response = await instance.post("school/login/", userData);

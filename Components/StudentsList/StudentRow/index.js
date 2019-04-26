@@ -2,14 +2,22 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
 import {
-  Container,
-  Header,
+  Text,
+  Button,
+  Left,
+  Body,
+  Right,
+  List,
+  ListItem,
+  Picker,
   Content,
+  Spinner,
+  Input,
+  Image,
   Card,
   CardItem,
-  Body,
-  Text,
-  View
+  Thumbnail,
+  Icon
 } from "native-base";
 import * as actionCreators from "../../../Store/actions";
 
@@ -21,18 +29,21 @@ class StudentRow extends Component {
   render() {
     let student = this.props.student;
     return (
-      <Card>
-        <CardItem
-          button
-          onPress={() =>
-            this.props.navigation.navigate("StudentDetail", {
-              student: student
-            })
-          }
-        >
-          <Text>{student.name}</Text>
-        </CardItem>
-      </Card>
+      <CardItem
+        button
+        onPress={() =>
+          this.props.navigation.navigate("StudentDetail", {
+            student: student
+          })
+        }
+      >
+        <Left>
+          <Thumbnail source={{ uri: student.image }} />
+          <Body>
+            <Text> {student.name}</Text>
+          </Body>
+        </Left>
+      </CardItem>
     );
   }
 }

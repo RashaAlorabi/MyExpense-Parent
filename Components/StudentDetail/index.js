@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component , Fragment} from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../Store/actions";
 import { TextInput } from "react-native";
@@ -10,96 +10,138 @@ import {
   Left,
   Body,
   Right,
-  List,
+  View,
   ListItem,
   Picker,
   Content,
   Spinner,
   Input,
-  Image,
   Card,
   CardItem,
   Thumbnail,
-  Icon
+  Icon,
+  Row,
+  Col,Tab, Tabs, ScrollableTab, H1
 } from "native-base";
-
+import Overlay from 'react-native-modal-overlay';
+import CategoryRItem from "./CategoryRItem"
 class StudentDetail extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam("student").name
+      title: navigation.getParam("student").name,
+      headerRight: <Thumbnail style={{marginRight:10}} source={{ uri: navigation.getParam("student").image }} />,
+      headerStyle:{height:80, backgroundColor:"#3DDDD5"},
+      headerTitleStyle:{fontSize:20},
     };
   };
   async componentDidMount() {
     let studentORder = this.props.navigation.getParam("student");
     if (studentORder.orders) {
-      console.log("studentORder ===>", studentORder);
       let OrderHistory = studentORder.orders.filter(order => order.paid);
       this.props.saveOrderHistory(OrderHistory);
     }
-    // if (studentORder.not_allowed) {
-    //   let xItemsID = studentORder.not_allowed.map(item => item.id);
-    //   await this.props.fetchNotAlowedItems(xItemsID);
-    // }
+    
   }
   state = {
-    limit: null
+    limit: null,
+    modalVisible: false, 
   };
-
+  
+  onClose = () => this.setState({ modalVisible: false});
   render() {
     let student = this.props.navigation.getParam("student");
-    console.log(student, "student parent");
+    let CategoriesList = [];
+    CategoriesList = student.school.items.map(item => item.category.name);
+    let itemsCategories;
+    let newCategoriesList = CategoriesList.filter(
+      (v, i, a) => a.indexOf(v) === i
+    );
+    let Tap = newCategoriesList.map(category => 
+          <Tab heading={category} key={`${student.id} ${category}`}>
+            <ItemList student={student} items={student.school.items.filter(item=> item.category.name === category)} />
+          </Tab>
+    )
     return (
       <Content>
         <Card style={{ flex: 0 }}>
-          <CardItem>
+          <CardItem style={{marginHorizontal:10, marginVertical:20}}>
+            <Body/>
+            <Right>
+              <Text style={{fontSize:20}}>{`${student.name} في ${student.grade}`}</Text>
+            </Right>
+          </CardItem>
+          <CardItem style={{marginHorizontal:10,}}>
             <Left>
-              <Thumbnail source={{ uri: student.image }} />
-              <Body>
-                <Text> {student.name}</Text>
-                <Text note>{student.grade}</Text>
-                <Text note>
-                  limil {this.state.limit ? this.state.limit : student.limit}
-                </Text>
-              </Body>
+              <Icon name="pencil-square-o" type="FontAwesome" onPress={() => this.setState({modalVisible:true})}/>
             </Left>
+            <Right>
+            <Text>{`الحد اليومي ${student.limit === 1 ? "ريال" : student.limit === 2 ? "ريالين" : `${student.limit} ريالات`} `}</Text>
+            </Right>
           </CardItem>
-          <CardItem>
-            <ListItem>
-              <TextInput
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderColor: "gray",
-                  borderWidth: 1
-                }}
-                value={this.state.limit}
-                onChangeText={limit => this.setState({ limit })}
-              />
+          <View style={{justifyContent: 'center',alignItems: 'center',flexDirection: 'row', marginTop:10, marginBottom:20}}>
+            <H1> قائمة الاطعمة الممنوعة</H1>
+          </View>
+          <Tabs renderTabBar={()=> <ScrollableTab />}>
+            {Tap}
+          </Tabs>
+          <View style={{justifyContent: 'center',alignItems: 'center',flexDirection: 'row',}}>
               <Button
-                onPress={() => {
-                  this.props.updateStudentLimit(student, this.state.limit);
-                  this.setState({ state: this.state });
-                }}
-              >
-                <Icon name="pencil-square-o" type="FontAwesome" />
-              </Button>
-            </ListItem>
-          </CardItem>
-          <ListItem>
-            <ItemList student={student} />
-          </ListItem>
-          <CardItem>
-            <ListItem>
-              <Button
+                style={{marginTop:10}}
                 onPress={() =>
-                  this.props.navigation.navigate("StudentOrderHistory")
+                  this.props.notAlowedItems(
+                    this.props.checkedItems,
+                    student.id
+                  )
                 }
               >
-                <Text>طلبات {student.name}</Text>
+                <Text>أمنع عن أبني</Text>
               </Button>
+          </View>
+          <CardItem>
+            <ListItem>
+              
             </ListItem>
           </CardItem>
         </Card>
+        <Button
+          full
+          onPress={() =>this.props.navigation.navigate("StudentOrderHistory")}>
+          <Text>طلبات {student.name}</Text>
+        </Button>
+        <Overlay 
+        visible={this.state.modalVisible} onClose={this.onClose} closeOnTouchOutside
+        animationType="zoomIn" containerStyle={{backgroundColor: 'rgba(114, 183, 226,0.78)'}}
+        childrenWrapperStyle={{backgroundColor: '#eee'}}
+        animationDuration={500}>
+        {
+          (hideModal, overlayState) => (
+            <Fragment>
+               <Row style={{height:50}}>
+                  <TextInput
+                      style={{
+                        width: 90,
+                        height: 40,
+                        borderColor: "gray",
+                        borderWidth: 1,
+                        marginTop:3,
+                        marginRight:5,
+                        textAlign: 'right'
+                      }}
+                      value={this.state.limit}
+                      onChangeText={limit => this.setState({ limit })}
+                      placeholder={"ادخل المبلغ"}
+                    />
+                  <Button onPress={() => {
+                              this.props.updateStudentLimit(student, this.state.limit);
+                              this.setState({ state: this.state, modalVisible:false});
+                            }}>
+                      <Text>تم</Text>
+                    </Button>
+               </Row>
+            </Fragment>
+          )
+        }
+      </Overlay>
       </Content>
     );
   }
@@ -108,11 +150,14 @@ class StudentDetail extends Component {
 const mapStateToProps = state => {
   return {
     loading: state.ParentReducer.loading,
-    parent: state.ParentReducer.parent
+    parent: state.ParentReducer.parent,
+    checkedItems : state.ParentReducer.checkedItems
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
+    notAlowedItems: (items, student) =>
+    dispatch(actionCreators.notAlowedItems(items, student)),
     fetchParentProfile: () => dispatch(actionCreators.fetchParentProfile()),
     updateStudentLimit: (studentDate, limit) =>
       dispatch(actionCreators.updateStudentLimit(studentDate, limit)),

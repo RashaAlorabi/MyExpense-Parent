@@ -26,7 +26,8 @@ class UpdateProfile extends Component {
     return {
       title: "تحديث معلوماتي",
       headerRight: <LogOut/>,
-      headerLeft:null
+      headerLeft:null,
+      headerStyle:{backgroundColor:"#3DDDD5"},
     };
   };
   state = {
@@ -37,7 +38,7 @@ class UpdateProfile extends Component {
   };
   render() {
       return (
-        <Content>
+        <Content style={{backgroundColor:"#72B7E2"}}>
         <List>
           <ListItem style={{ borderBottomWidth: 0 }}>
             <Icon name={"closecircleo"} type={"AntDesign"} onPress={() =>this.props.navigation.goBack()} style={{fontSize: 40, marginLeft:20, marginTop:10, color:"black"}}/>
@@ -52,7 +53,7 @@ class UpdateProfile extends Component {
                   //   backgroundColor: "white",
                   // }}
                 >
-                <Label style={{textAlign: 'right'}}>اسم المستخدم</Label>
+                <Label style={{textAlign: 'right', color: '#ffff' , fontSize:18, fontWeight:"bold"}}>{this.state.username}</Label>
                   <Input
                     autoCorrect={false}
                     autoCapitalize="none"
@@ -64,7 +65,7 @@ class UpdateProfile extends Component {
                   floatingLabel
                   // style={{ backgroundColor: "white", marginTop: 10 }}
                 >
-                  <Label style={{textAlign: 'right'}}>{this.state.first_name}</Label>
+                  <Label style={{textAlign: 'right', color: '#ffff'}}>{this.state.first_name}</Label>
                   <Input
                     autoCorrect={false}
                     // secureTextEntry
@@ -77,7 +78,7 @@ class UpdateProfile extends Component {
                   floatingLabel
                   // style={{ backgroundColor: "white", marginTop: 10 }}
                 >
-                 <Label style={{textAlign: 'right'}}>{this.state.last_name}</Label>
+                 <Label style={{textAlign: 'right', color: '#ffff'}}>{this.state.last_name}</Label>
                   <Input
                     autoCorrect={false}
                     // secureTextEntry
@@ -90,7 +91,7 @@ class UpdateProfile extends Component {
                   floatingLabel
                   // style={{ backgroundColor: "white", marginTop: 10 }}
                 >
-                <Label style={{textAlign: 'right'}}>{this.state.email}</Label>
+                <Label style={{textAlign: 'right', color: '#ffff'}}>{this.state.email}</Label>
                   <Input
                     autoCorrect={false}
                     // secureTextEntry

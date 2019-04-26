@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Constants, WebBrowser } from 'expo';
 import * as actionCreators from "../../Store/actions";
 import LogOut from ".././LogoutButton";
-import { Icon } from "native-base";
+import { Icon, Left, Right, Body } from "native-base";
 
 class ParentProfile extends Component {
   async componentDidMount(){
@@ -13,7 +13,8 @@ class ParentProfile extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "صفحتي",
-      headerRight: <LogOut/>
+      headerRight: <LogOut/>,
+      headerStyle:{backgroundColor:"#3DDDD5"}
     };
   };
   state = {
@@ -33,7 +34,7 @@ class ParentProfile extends Component {
       return (
         <View style={styles.container}>
         <View style={styles.header}>
-          <Icon name={"account-edit"} type={"MaterialCommunityIcons"} onPress={() =>this.props.navigation.navigate('UpdateParent')} style={{fontSize: 40, marginLeft:20, marginTop:10, color:"white"}}/>
+            <Icon name={"account-edit"} type={"MaterialCommunityIcons"} onPress={() =>this.props.navigation.navigate('UpdateParent')} style={{fontSize: 40, marginLeft:20, marginTop:10, color:"white"}}/>
         </View>
           <Image style={styles.avatar} source={parent.image ? { uri: parent.image } : {uri:"https://image.flaticon.com/icons/png/512/97/97895.png"}} resizeMode="stretch"/>
         <View style={styles.body}>
@@ -42,10 +43,11 @@ class ParentProfile extends Component {
               <Text style={styles.info}>{`@${parent.user.username}`}</Text>
               <Text style={styles.description}>{`${parent.user.email}`}</Text>
               <View  style={styles.description}>
-                <Icon name={"money"} type={"FontAwesome"} onPress={() =>this.props.navigation.navigate('UpdateParent')} style={{fontSize: 24, marginRight:5, marginTop:2, color:"black"}}/>
-              <Text style={{fontSize:25}}> 
+                {/* <Icon name={"money"} type={"FontAwesome"} onPress={() =>this.props.navigation.navigate('UpdateParent')} style={{fontSize: 24, marginRight:5, marginTop:2, color:"black"}}/> */}
+              <Text style={{fontSize:25 , marginTop:8}}> 
                 {`${parent.wallet}`}
               </Text>
+                <Image source={require("../../assets/sr.png")} style={{width:80, height:40}} />
               </View>
             </View>
         </View>
@@ -71,7 +73,7 @@ const mapDispatchToProps = dispatch => {
 
 const styles = StyleSheet.create({
   header:{
-    backgroundColor: "#C58989",
+    backgroundColor: "#72B7E2",
     height:200,
   },
   avatar: {

@@ -4,7 +4,10 @@ export {
   updateParentWallet,
   updateStudentLimit,
   notAlowedItems,
-  fetchNotAlowedItems
+  fetchNotAlowedItems,
+  addCheckedItem,
+  rmCheckedItem,
+  setCheckedItem,
 } from "./parentAction";
 
 export { saveOrderHistory } from "./orderHistory";

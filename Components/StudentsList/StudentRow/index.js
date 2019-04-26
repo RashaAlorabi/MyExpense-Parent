@@ -13,7 +13,7 @@ import {
   Content,
   Spinner,
   Input,
-  Image,
+  View,
   Card,
   CardItem,
   Thumbnail,
@@ -29,21 +29,25 @@ class StudentRow extends Component {
   render() {
     let student = this.props.student;
     return (
-      <CardItem
-        button
-        onPress={() =>
-          this.props.navigation.navigate("StudentDetail", {
-            student: student
-          })
-        }
-      >
-        <Left>
-          <Thumbnail source={{ uri: student.image }} />
-          <Body>
-            <Text> {student.name}</Text>
-          </Body>
-        </Left>
-      </CardItem>
+      <Card style={{ flex: 0,}}>
+        <CardItem
+          button
+          onPress={() => this.props.navigation.navigate("StudentDetail", {student: student})
+          }> 
+          <Body/>
+          <Right>
+            <View style={{ 
+                alignContent: "flex-start",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                justifyContent: "center",
+                }}>
+              <Text style={{fontSize:20 , marginRight:20, marginTop:13}}> {student.name}</Text>         
+              <Thumbnail source={{ uri: student.image }} />
+            </View>
+          </Right>
+        </CardItem>
+      </Card>
     );
   }
 }

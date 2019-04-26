@@ -14,7 +14,9 @@ import {
   Spinner,
   Input,
   Image,
-  View
+  View,
+  Row,
+  Col
 } from "native-base";
 import { CheckBox } from "react-native-elements";
 class ItemRow extends Component {
@@ -22,7 +24,6 @@ class ItemRow extends Component {
     let itemID = this.props.not_allowed.find(
       item => item.id === this.props.item.id
     );
-    console.log("id ==> ", itemID);
     if (itemID) {
       this.setState({ checked: true });
     }
@@ -35,16 +36,20 @@ class ItemRow extends Component {
 
     return (
       <View>
-        <Text>{item.name}</Text>
-        <CheckBox
-          checked={this.state.checked}
-          onPress={() => {
-            !this.state.checked
-              ? this.props.addItems(item)
-              : this.props.removeItems(item);
-            this.setState({ checked: !this.state.checked });
-          }}
-        />
+        <Row>
+          <Col>
+              <CheckBox
+              checked={this.state.checked}
+              onPress={() => {
+                !this.state.checked
+                  ? this.props.addItems(item)
+                  : this.props.removeItems(item);
+                this.setState({ checked: !this.state.checked });
+              }}
+              title={item.name}
+            />
+          </Col>
+        </Row>
       </View>
     );
   }

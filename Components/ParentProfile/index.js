@@ -1,25 +1,29 @@
 import React, { Component } from "react";
-import {
-  Container,
-  Header,
-  Content,
-  Card,
-  CardItem,
-  Body,
-  Text,
-  Button,
-  Thumbnail
-} from "native-base";
+import { StyleSheet, TextInput, View, Text, Image, TouchableOpacity} from "react-native";
 import { connect } from "react-redux";
-import { TextInput } from "react-native";
-
+import { Constants, WebBrowser } from 'expo';
 import * as actionCreators from "../../Store/actions";
+import LogOut from ".././LogoutButton";
+import { Icon } from "native-base";
 
 class ParentProfile extends Component {
-  state = {
-    wallet: ""
+  async componentDidMount(){
+    await this.props.fetchParentProfile()
+  }
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: "صفحتي",
+      headerRight: <LogOut/>
+    };
   };
-
+  state = {
+    wallet: "",
+    result: null
+  };
+  _handlePressButtonAsync = async (parentWallet, parentID) => {
+    let result = await WebBrowser.openAuthSessionAsync(`http://127.0.0.1:8000/api/parent/add/to/wallet/${parentWallet}/${parentID}/`, "http://127.0.0.1:8000/api/parent/profile/");
+    this.setState({ result });
+  };
   render() {
     let parent;
     if (this.props.loading) {
@@ -27,93 +31,25 @@ class ParentProfile extends Component {
     } else {
       parent = this.props.parent;
       return (
-        <Card>
-          <CardItem>
-            <Body>
-              <CardItem>
-                <Thumbnail source={parent.image ? { uri: parent.image } : {uri:"https://image.flaticon.com/icons/png/512/97/97895.png"}} />
-              </CardItem>
-
-              <CardItem>
-                <Text
-                  style={{
-                    marginHorizontal: 5,
-                    borderRightWidth: 5,
-                    borderColor: "black",
-                    borderStyle: "dotted",
-                    borderRadius: 1
-                  }}
-                >
-                  First name {parent.user.first_name}
-                </Text>
-              </CardItem>
-              <CardItem>
-                <Text
-                  style={{
-                    marginHorizontal: 5,
-                    borderRightWidth: 5,
-                    borderColor: "black",
-                    borderStyle: "dotted",
-                    borderRadius: 1
-                  }}
-                >
-                  Last name {parent.user.last_name}
-                </Text>
-              </CardItem>
-              <CardItem>
-                <Text
-                  style={{
-                    marginHorizontal: 5,
-                    borderRightWidth: 5,
-                    borderColor: "black",
-                    borderStyle: "dotted",
-                    borderRadius: 1
-                  }}
-                >
-                  Username {parent.user.username}
-                </Text>
-              </CardItem>
-              <CardItem>
-                <Text
-                  style={{
-                    marginHorizontal: 5
-                  }}
-                >
-                  Email {parent.user.email}
-                </Text>
-              </CardItem>
-              <CardItem>
-                <Text
-                  style={{
-                    marginHorizontal: 5
-                  }}
-                >
-                  wallet {parent.wallet}
-                </Text>
-              </CardItem>
-              <CardItem>
-                <TextInput
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderColor: "gray",
-                    borderWidth: 1
-                  }}
-                  value={this.state.wallet}
-                  onChangeText={wallet => this.setState({ wallet })}
-                />
-
-                <Button
-                  onPress={() =>
-                    this.props.updateParentWallet(this.state.wallet)
-                  }
-                >
-                  <Text>update wallet</Text>
-                </Button>
-              </CardItem>
-            </Body>
-          </CardItem>
-        </Card>
+        <View style={styles.container}>
+        <View style={styles.header}>
+          <Icon name={"account-edit"} type={"MaterialCommunityIcons"} onPress={() =>this.props.navigation.navigate('UpdateParent')} style={{fontSize: 40, marginLeft:20, marginTop:10, color:"white"}}/>
+        </View>
+          <Image style={styles.avatar} source={parent.image ? { uri: parent.image } : {uri:"https://image.flaticon.com/icons/png/512/97/97895.png"}} resizeMode="stretch"/>
+        <View style={styles.body}>
+            <View style={styles.bodyContent}>
+              <Text style={styles.name}>{`${parent.user.first_name} ${parent.user.last_name}`}</Text>
+              <Text style={styles.info}>{`@${parent.user.username}`}</Text>
+              <Text style={styles.description}>{`${parent.user.email}`}</Text>
+              <View  style={styles.description}>
+                <Icon name={"money"} type={"FontAwesome"} onPress={() =>this.props.navigation.navigate('UpdateParent')} style={{fontSize: 24, marginRight:5, marginTop:2, color:"black"}}/>
+              <Text style={{fontSize:25}}> 
+                {`${parent.wallet}`}
+              </Text>
+              </View>
+            </View>
+        </View>
+      </View>
       );
     }
   }
@@ -128,11 +64,80 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchParentProfile: () => dispatch(actionCreators.fetchParentProfile()),
-    updateParentWallet: wallet =>
-      dispatch(actionCreators.updateParentWallet(wallet))
+    updateParentWallet: (wallet, parentID) =>
+      dispatch(actionCreators.updateParentWallet(wallet, parentID))
   };
 };
 
+const styles = StyleSheet.create({
+  header:{
+    backgroundColor: "#C58989",
+    height:200,
+  },
+  avatar: {
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: "white",
+    marginBottom:10,
+    alignSelf:'center',
+    position: 'absolute',
+    marginTop:130
+  },
+  name:{
+    fontSize:22,
+    color:"#48413E",
+    fontWeight:'600',
+  },
+  body:{
+    marginTop:40,
+  },
+  bodyContent: {
+    // flex: 1,
+    marginTop:30,
+    alignItems: 'center',
+    // padding:30,
+  },
+  name:{
+    fontSize:28,
+    color: "#48413E",
+    fontWeight: "600"
+  },
+  info:{
+    fontSize:16,
+    color: "#00BFFF",
+    marginTop:10
+  },
+  description:{
+    fontSize:16,
+    color: "#5D5D5D",
+    marginTop:20,
+    // textAlign: 'center',
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  buttonContainer: {
+    height:45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:10,
+    width:250,
+    borderRadius:30,
+    backgroundColor: "black",
+  },
+  buttonlogout: {
+    height:45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:10,
+    width:250,
+    borderRadius:30,
+    backgroundColor: "red",
+  },
+});
 export default connect(
   mapStateToProps,
   mapDispatchToProps

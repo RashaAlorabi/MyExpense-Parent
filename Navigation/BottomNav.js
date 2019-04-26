@@ -44,7 +44,7 @@ const BottomNav = createBottomTabNavigator(
       activeTintColor: "white",
       inactiveTintColor: "black",
       style: {
-        backgroundColor: "rgb(20,90,100)"
+        backgroundColor: "#3DDDD5"
       }
     },
     // headerMode: 'none'

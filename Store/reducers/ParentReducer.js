@@ -6,20 +6,19 @@ const initialState = {
   },
   orderHistory: [],
   loading: true,
-  notAlowedItems: []
+  notAlowedItems: [],
+  checkedItems:[],
 };
 
 const classReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.FETCH_PARENT_PROFILE:
-      console.log("parent reducer", action.payload);
       return {
         ...state,
         parent: action.payload,
         loading: false
       };
     case actionTypes.UPDATE_PARENT_WALLET:
-      console.log("wallet reducer", action.payload);
       state.parent.wallet = action.payload;
       return {
         ...state,
@@ -27,7 +26,6 @@ const classReducer = (state = initialState, action) => {
         loading: false
       };
     case actionTypes.UPDATE_STUDENT_LIMIT:
-      console.log("wallet reducer", action.payload);
       state.parent.child.limit = action.payload;
       return {
         ...state,
@@ -44,6 +42,21 @@ const classReducer = (state = initialState, action) => {
         ...state,
         notAlowedItems: action.payload
       };
+    case actionTypes.ADD_CHECKED_ITEM:
+      return {
+        ...state,
+        checkedItems: state.checkedItems.concat(action.payload)
+      };
+    case actionTypes.RM_CHECKED_ITEM:
+      return {
+        ...state,
+        checkedItems: state.checkedItems.filter(itemID => itemID !== action.payload) 
+      };
+    case actionTypes.SET_CHECKED_ITEMS:
+      return {
+        ...state,
+        checkedItems:action.payload
+      }
     default:
       return state;
   }

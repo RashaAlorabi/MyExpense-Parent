@@ -19,44 +19,27 @@ import {
 } from "native-base";
 import { CheckBox } from "react-native-elements";
 import ItemRow from "./ItemRow";
-import CategoryRow from "../CategoryRow";
 class ItemList extends Component {
-  //   async componentDidMount() {
-  //     let studentORder = this.props.student;
-  //     if (studentORder.not_allowed) {
-  //       let xItemsID = studentORder.not_allowed.map(item => item.id);
-  //       await this.props.fetchNotAlowedItems(xItemsID);
-  //     }
-  //   }
+  async componentDidMount(){
+    let items = this.props.student.not_allowed.map(item => item.id)
+    await this.props.setCheckedItem(items)
+  }
   state = {
     checked: false,
-    checkedItems: this.props.student.not_allowed.map(item => item.id)
+    checkedItems: this.props.checkedItems
   };
 
   addItems = item => {
-    console.log("item =========================================>", item);
-    this.setState({ checkedItems: this.state.checkedItems.concat(item.id) });
+    this.props.addCheckedItem(item)
   };
 
   removeItems = item => {
-    console.log("item =========================================>", item);
-    this.setState({
-      checkedItems: this.state.checkedItems.filter(itemID => itemID !== item.id)
-    });
+    this.props.rmCheckedItem(item)
   };
 
   render() {
     let student = this.props.student;
-    const items = this.props.student.school.items;
-    let itemsList;
-    let CategoriesList = [];
-    let itemsCategories;
-    CategoriesList = items.map(item => item.category.name);
-
-    let newCategoriesList = CategoriesList.filter(
-      (v, i, a) => a.indexOf(v) === i
-    );
-    console.log(newCategoriesList, "newCategoriesList--------------");
+    const items = this.props.items;
     itemsList = items.map(item => (
       <ItemRow
         key={item.id}
@@ -66,39 +49,27 @@ class ItemList extends Component {
         removeItems={this.removeItems}
       />
     ));
-
-    itemsCategories = newCategoriesList.map(category => (
-      <CategoryRow key={category} category={category} />
-    ));
-    console.log(itemsCategories, "itemsCategories------------------");
     return (
       <Content>
-        <View>{itemsCategories}</View>
         {itemsList}
-        <Button
-          onPress={() =>
-            this.props.onFetchNotAlowedItems(
-              this.state.checkedItems,
-              student.id
-            )
-          }
-        >
-          <Text>SEND</Text>
-        </Button>
       </Content>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  notAlowedItems: state.ParentReducer.notAlowedItems
+  notAlowedItems: state.ParentReducer.notAlowedItems,
+  checkedItems : state.ParentReducer.checkedItems
 });
 
 const mapDispatchToProps = dispatch => ({
   onFetchNotAlowedItems: (items, student) =>
     dispatch(actionCreators.notAlowedItems(items, student)),
   fetchNotAlowedItems: items =>
-    dispatch(actionCreators.fetchNotAlowedItems(items))
+    dispatch(actionCreators.fetchNotAlowedItems(items)),
+  rmCheckedItem: item => dispatch(actionCreators.rmCheckedItem(item)),
+  addCheckedItem: item => dispatch(actionCreators.addCheckedItem(item)),
+  setCheckedItem: items => dispatch(actionCreators.setCheckedItem(items))
 });
 export default connect(
   mapStateToProps,

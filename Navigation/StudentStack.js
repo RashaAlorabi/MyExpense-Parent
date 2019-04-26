@@ -17,7 +17,6 @@ const StudentStack = createStackNavigator(
     cardStyle: {
       backgroundColor: "rgb(248, 249, 250)"
     },
-    // headerMode:"none"
   }
 );
 

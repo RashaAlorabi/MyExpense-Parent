@@ -14,7 +14,6 @@ export const fetchParentProfile = () => {
     try {
       const res = await instance.get("parent/profile/");
       const parent = res.data;
-      console.log("parent action", parent);
       dispatch({
         type: actionTypes.FETCH_PARENT_PROFILE,
         payload: parent
@@ -81,3 +80,30 @@ export const fetchNotAlowedItems = items => {
     });
   };
 };
+
+export const rmCheckedItem = item => {
+  return async dispatch => {
+    dispatch({
+      type: actionTypes.RM_CHECKED_ITEM,
+      payload: item.id
+    });
+  };
+};
+
+export const addCheckedItem = item => {
+  return async dispatch => {
+    dispatch({
+      type: actionTypes.ADD_CHECKED_ITEM,
+      payload: item.id
+    });
+  };
+};
+
+export const setCheckedItem = items => {
+  return async dispatch => {
+    dispatch({
+      type: actionTypes.SET_CHECKED_ITEMS,
+      payload: items
+    });
+  };
+}

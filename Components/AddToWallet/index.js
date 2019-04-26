@@ -24,6 +24,7 @@ class AddToWallet extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "أضافة للمحظة",
+      headerStyle:{backgroundColor:"#3DDDD5"},
     };
   };
   state = {

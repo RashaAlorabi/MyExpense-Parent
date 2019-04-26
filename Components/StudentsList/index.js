@@ -9,33 +9,35 @@ import {
   Content,
   Card,
   CardItem,
-  Body,
+  View,
   Text
 } from "native-base";
 
 class StudentsList extends Component {
+  
   componentDidMount() {
     this.props.fetchParentProfile();
   }
-
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: "أبنائي",
+      headerStyle:{backgroundColor:"#3DDDD5"},
+    };
+  };
   render() {
     let studentRow;
     if (this.props.loading) {
       studentRow = <Text />;
     } else {
-      console.log("studentRow", this.props.parent.child);
       studentRow = this.props.parent.child.map(student => (
         <StudentRow key={student.id} student={student} />
       ));
     }
 
     return (
-      <Card style={{ flex: 0 }}>
-        <Text>ابناىي</Text>
-        <CardItem>
-          <Body>{studentRow}</Body>
-        </CardItem>
-      </Card>
+      <View style={{marginTop:10}}>
+        {studentRow}
+      </View>
     );
   }
 }

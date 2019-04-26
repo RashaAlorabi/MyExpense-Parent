@@ -30,7 +30,8 @@ class StudentsList extends Component {
     }
 
     return (
-      <Card>
+      <Card style={{ flex: 0 }}>
+        <Text>ابناىي</Text>
         <CardItem>
           <Body>{studentRow}</Body>
         </CardItem>

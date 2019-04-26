@@ -19,6 +19,7 @@ import {
 } from "native-base";
 import { CheckBox } from "react-native-elements";
 import ItemRow from "./ItemRow";
+import CategoryRow from "../CategoryRow";
 class ItemList extends Component {
   //   async componentDidMount() {
   //     let studentORder = this.props.student;
@@ -48,7 +49,14 @@ class ItemList extends Component {
     let student = this.props.student;
     const items = this.props.student.school.items;
     let itemsList;
+    let CategoriesList = [];
+    let itemsCategories;
+    CategoriesList = items.map(item => item.category.name);
 
+    let newCategoriesList = CategoriesList.filter(
+      (v, i, a) => a.indexOf(v) === i
+    );
+    console.log(newCategoriesList, "newCategoriesList--------------");
     itemsList = items.map(item => (
       <ItemRow
         key={item.id}
@@ -59,8 +67,13 @@ class ItemList extends Component {
       />
     ));
 
+    itemsCategories = newCategoriesList.map(category => (
+      <CategoryRow key={category} category={category} />
+    ));
+    console.log(itemsCategories, "itemsCategories------------------");
     return (
       <Content>
+        <View>{itemsCategories}</View>
         {itemsList}
         <Button
           onPress={() =>

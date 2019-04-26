@@ -24,17 +24,15 @@ const setAuthToken = token => {
 };
 /* -- check for expired token -- */
 export const checkForExpiredToken = () => {
-  return dispatch => {
+  return async dispatch => {
     // Get token
-    const token = AsyncStorage.getItem("token");
-
+    const token = await AsyncStorage.getItem("token");
+    
     if (token) {
       const currentTime = Date.now() / 1000;
 
       // Decode token and get user info
       const user = jwt_decode(token);
-
-      console.log((user.exp - currentTime) / 60);
 
       // Check token expiration
       if (user.exp >= currentTime) {
@@ -50,17 +48,15 @@ export const checkForExpiredToken = () => {
 };
 /* -- login from api -- */
 export const login = (userData, navigation) => {
-  console.log("Treger")
   return async dispatch => {
     try {
       let response = await instance.post("school/login/", userData);
       let user = response.data;
-      console.log("TCL: login -> user", user);
       let decodedUser = jwt_decode(user.token);
       setAuthToken(user.token);
       await dispatch(setCurrentUser(decodedUser));
       await dispatch(fetchParentProfile());
-      navigation.replace("ParentProfile");
+      navigation.replace("BottomNav");
     } catch (error) {
       console.error(error);
     }
@@ -69,7 +65,7 @@ export const login = (userData, navigation) => {
 /* -- signup from api -- */
 
 //will delete the whole user obj
-export const logout = () => {
+export const logout = (navigation) => {
   setAuthToken();
   navigation.navigate("Login");
   return setCurrentUser();

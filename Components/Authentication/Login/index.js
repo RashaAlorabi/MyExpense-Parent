@@ -11,12 +11,16 @@ import {
   Input,
   Item,
   Content,
+  Container,
   Header
 } from "native-base";
 
 class Login extends Component {
-  componentDidMount() {
-    //this.props.checkForToken();
+  async componentDidMount() {
+    await this.props.checkForToken();
+    if (this.props.user){
+      this.props.navigation.replace("BottomNav");
+    }
   }
   state = {
     username: "",
@@ -28,9 +32,9 @@ class Login extends Component {
     //   this.props.navigation.replace("ParentProfile");
     // }
     return (
-      <Content>
+      <Container>
         <Header transparent />
-        <List>
+        <List style={{marginTop:200}}>
           <ListItem style={{ borderBottomWidth: 0 }}>
             <Body>
               <Form>
@@ -66,14 +70,16 @@ class Login extends Component {
             </Body>
           </ListItem>
           <Button
-            full
+            block
+            bordered
+            rounded
             onPress={() => this.props.login(this.state, this.props.navigation)}
-            style={{ backgroundColor: "rgb(95, 130, 182)" }}
+            // style={{ backgroundColor: "rgb(95, 130, 182)" }}
           >
             <Text>Login</Text>
           </Button>
         </List>
-      </Content>
+      </Container>
     );
   }
 }

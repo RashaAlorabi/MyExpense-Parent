@@ -1,14 +1,15 @@
 import { createBottomTabNavigator } from "react-navigation";
 import React from "react";
 import { Icon } from "native-base";
-import AuthStack from "./AuthStack";
-
+import ParentStack from "./ParentStack";
 import StudentStack from "./StudentStack";
-
+import AddToWallet from "./AddToWallet"
 const BottomNav = createBottomTabNavigator(
   {
-    Auth: AuthStack,
-    Student: StudentStack
+    ParentStack: ParentStack,
+    AddToWallet:AddToWallet,
+    Student: StudentStack,
+
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -25,10 +26,10 @@ const BottomNav = createBottomTabNavigator(
             iconName = "human-child";
             iconType = "MaterialCommunityIcons";
             break;
-          // case "Wallet":
-          //   iconName = "cart";
-          //   iconType = "MaterialCommunityIcons";
-          //   break;
+          case "AddToWallet":
+            iconName = "money";
+            iconType = "FontAwesome";
+            break;
           default:
             iconName = "account";
             iconType = "MaterialCommunityIcons";
@@ -45,7 +46,8 @@ const BottomNav = createBottomTabNavigator(
       style: {
         backgroundColor: "rgb(20,90,100)"
       }
-    }
+    },
+    // headerMode: 'none'
   }
 );
 

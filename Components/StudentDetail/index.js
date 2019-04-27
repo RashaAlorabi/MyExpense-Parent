@@ -27,20 +27,16 @@ import {
   ScrollableTab,
   H1
 } from "native-base";
-import Overlay from "react-native-modal-overlay";
-import CategoryRItem from "./CategoryRItem";
+import Overlay from 'react-native-modal-overlay';
+import CategoryRItem from "./CategoryRItem"
+import {LinearGradient} from 'expo';
 class StudentDetail extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam("student").name,
-      headerRight: (
-        <Thumbnail
-          style={{ marginRight: 10 }}
-          source={{ uri: navigation.getParam("student").image }}
-        />
-      ),
-      headerStyle: { height: 80, backgroundColor: "#3DDDD5" },
-      headerTitleStyle: { fontSize: 20 }
+      headerRight: <Thumbnail style={{marginRight:10}} source={{ uri: navigation.getParam("student").image }} />,
+      headerStyle:{height:80,},
+      headerTitleStyle:{fontSize:20},
     };
   };
   async componentDidMount() {
@@ -64,31 +60,30 @@ class StudentDetail extends Component {
     let newCategoriesList = CategoriesList.filter(
       (v, i, a) => a.indexOf(v) === i
     );
-    let Tap = newCategoriesList.map(category => (
-      <Tab heading={category} key={`${student.id} ${category}`}>
-        <ItemList
-          student={student}
-          items={student.school.items.filter(
-            item => item.category.name === category
-          )}
-        />
-      </Tab>
-    ));
+    let Tap = newCategoriesList.map(category => 
+          <Tab heading={category} key={`${student.id} ${category}`}>
+            <ItemList  student={student} items={student.school.items.filter(item=> item.category.name === category)} />
+          </Tab>
+    )
     return (
+    <LinearGradient
+      colors={['#72B7E2', '#AE8BF1', '#3DDDD5']}
+      style={{ width:"100%", height:"100%"}}>  
       <Content>
-        <Card style={{ flex: 0 }}>
+        <Card transparent style={{ flex: 0 }}>
           <CardItem
             style={{
               marginHorizontal: 10,
               marginVertical: 20,
-              textAlign: "right"
+              textAlign: "right",
+              backgroundColor:"rgba(255, 255, 255,0.4)"
             }}
           >
             <Text style={{ fontSize: 20 }}>{`${student.name} في ${
               student.grade
             }`}</Text>
           </CardItem>
-          <CardItem style={{ marginHorizontal: 10 }}>
+          <CardItem style={{ marginHorizontal: 10 , backgroundColor:"rgba(255, 255, 255,0.4)"}}>
             <Left>
               <Icon
                 name="pencil-square-o"
@@ -117,26 +112,22 @@ class StudentDetail extends Component {
           >
             <H1> قائمة الاطعمة الممنوعة</H1>
           </View>
-          <Tabs renderTabBar={() => <ScrollableTab />}>{Tap}</Tabs>
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "row"
-            }}
-          >
-            <Button
-              style={{ marginTop: 10 }}
-              onPress={() =>
-                this.props.notAlowedItems(this.props.checkedItems, student.id)
-              }
-            >
-              <Text>أمنع عن أبني</Text>
-            </Button>
+          <Tabs transparent renderTabBar={()=> <ScrollableTab />}>
+            {Tap}
+          </Tabs>
+          <View style={{justifyContent: 'center',alignItems: 'center',flexDirection: 'row',}}>
+              <Button
+                style={{marginTop:10}}
+                onPress={() =>
+                  this.props.notAlowedItems(
+                    this.props.checkedItems,
+                    student.id
+                  )
+                }
+              >
+                <Text>أمنع عن أبني</Text>
+              </Button>
           </View>
-          <CardItem>
-            <ListItem />
-          </CardItem>
         </Card>
         <Button
           full
@@ -183,6 +174,7 @@ class StudentDetail extends Component {
           )}
         </Overlay>
       </Content>
+    </LinearGradient>
     );
   }
 }

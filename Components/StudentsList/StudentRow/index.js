@@ -37,6 +37,7 @@ class StudentRow extends Component {
               student: student
             })
           }
+          style={{backgroundColor:"rgba(255, 255, 255,0.4)"}}
         >
           <View
             style={{
@@ -47,7 +48,7 @@ class StudentRow extends Component {
             }}
           >
             <Left />
-            <Text style={{ fontSize: 20, marginTop: 13 }}> {student.name}</Text>
+            <Text style={{ fontSize: 20, marginTop: 13,  marginRight:20, }}> {student.name}</Text>
             <Right>
               <Thumbnail source={{ uri: student.image }} />
             </Right>

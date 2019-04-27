@@ -2,6 +2,7 @@ import { createStackNavigator } from "react-navigation";
 import { flipY } from 'react-navigation-transitions';
 import ParentProfile from "../Components/ParentProfile";
 import UpdateParent from "../Components/UpdateProfile";
+import {Image} from "react-native";
 
 const ParentStack = createStackNavigator(
   {

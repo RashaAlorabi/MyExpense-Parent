@@ -20,8 +20,10 @@ class ParentProfile extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "صفحتي",
-      headerRight: <LogOut />,
-      headerStyle: { backgroundColor: "#3DDDD5" }
+
+      headerRight: <LogOut/>,
+      // headerStyle:{backgroundColor:"#3DDDD5"}
+
     };
   };
   state = {
@@ -29,11 +31,7 @@ class ParentProfile extends Component {
     result: null
   };
   _handlePressButtonAsync = async (parentWallet, parentID) => {
-    let result = await WebBrowser.openAuthSessionAsync(
-      `http://127.0.0.1:8000/api/parent/add/to/wallet/${parentWallet}/${parentID}/`,
-      "http://127.0.0.1:8000/api/parent/profile/"
-    );
-    this.setState({ result });
+    let result = await WebBrowser.openAuthSessionAsync(`http://127.0.0.1:8000/api/parent/add/to/wallet/${parentWallet}/${parentID}/`);
   };
   render() {
     let parent;
@@ -42,30 +40,12 @@ class ParentProfile extends Component {
     } else {
       parent = this.props.parent;
       return (
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <Icon
-              name={"account-edit"}
-              type={"MaterialCommunityIcons"}
-              onPress={() => this.props.navigation.navigate("UpdateParent")}
-              style={{
-                fontSize: 40,
-                marginLeft: 20,
-                marginTop: 10,
-                color: "white"
-              }}
-            />
-          </View>
-          <Image
-            style={styles.avatar}
-            source={
-              parent.image
-                ? { uri: parent.image }
-                : require("../../assets/man.png")
-            }
-            resizeMode="stretch"
-          />
-          <View style={styles.body}>
+        <View>
+        <View style={styles.header}>
+            <Icon name={"account-edit"} type={"MaterialCommunityIcons"} onPress={() =>this.props.navigation.navigate('UpdateParent')} style={{fontSize: 40, marginLeft:20, marginTop:10, color:"white"}}/>
+        </View>
+          <Image style={styles.avatar} source={parent.image ? { uri: parent.image } : require("../../assets/man.png")} resizeMode="stretch"/>
+        <View style={styles.body}>
             <View style={styles.bodyContent}>
               <Text style={styles.name}>{`${parent.user.first_name} ${
                 parent.user.last_name

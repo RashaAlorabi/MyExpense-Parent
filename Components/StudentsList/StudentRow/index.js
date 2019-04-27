@@ -29,23 +29,29 @@ class StudentRow extends Component {
   render() {
     let student = this.props.student;
     return (
-      <Card style={{ flex: 0,}}>
+      <Card style={{ flex: 0 }}>
         <CardItem
           button
-          onPress={() => this.props.navigation.navigate("StudentDetail", {student: student})
-          }> 
-          <Body/>
-          <Right>
-            <View style={{ 
-                alignContent: "flex-start",
-                flexDirection: "row",
-                flexWrap: "wrap",
-                justifyContent: "center",
-                }}>
-              <Text style={{fontSize:20 , marginRight:20, marginTop:13}}> {student.name}</Text>         
+          onPress={() =>
+            this.props.navigation.navigate("StudentDetail", {
+              student: student
+            })
+          }
+        >
+          <View
+            style={{
+              alignContent: "flex-start",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "center"
+            }}
+          >
+            <Left />
+            <Text style={{ fontSize: 20, marginTop: 13 }}> {student.name}</Text>
+            <Right>
               <Thumbnail source={{ uri: student.image }} />
-            </View>
-          </Right>
+            </Right>
+          </View>
         </CardItem>
       </Card>
     );

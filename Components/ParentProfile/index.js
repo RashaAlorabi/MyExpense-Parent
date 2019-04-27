@@ -1,20 +1,27 @@
 import React, { Component } from "react";
-import { StyleSheet, TextInput, View, Text, Image, TouchableOpacity} from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  Text,
+  Image,
+  TouchableOpacity
+} from "react-native";
 import { connect } from "react-redux";
-import { Constants, WebBrowser } from 'expo';
+import { Constants, WebBrowser } from "expo";
 import * as actionCreators from "../../Store/actions";
 import LogOut from ".././LogoutButton";
 import { Icon, Left, Right, Body } from "native-base";
 
 class ParentProfile extends Component {
-  async componentDidMount(){
-    await this.props.fetchParentProfile()
+  async componentDidMount() {
+    await this.props.fetchParentProfile();
   }
   static navigationOptions = ({ navigation }) => {
     return {
       title: "صفحتي",
-      headerRight: <LogOut/>,
-      headerStyle:{backgroundColor:"#3DDDD5"}
+      headerRight: <LogOut />,
+      headerStyle: { backgroundColor: "#3DDDD5" }
     };
   };
   state = {
@@ -22,7 +29,10 @@ class ParentProfile extends Component {
     result: null
   };
   _handlePressButtonAsync = async (parentWallet, parentID) => {
-    let result = await WebBrowser.openAuthSessionAsync(`http://127.0.0.1:8000/api/parent/add/to/wallet/${parentWallet}/${parentID}/`, "http://127.0.0.1:8000/api/parent/profile/");
+    let result = await WebBrowser.openAuthSessionAsync(
+      `http://127.0.0.1:8000/api/parent/add/to/wallet/${parentWallet}/${parentID}/`,
+      "http://127.0.0.1:8000/api/parent/profile/"
+    );
     this.setState({ result });
   };
   render() {
@@ -33,25 +43,48 @@ class ParentProfile extends Component {
       parent = this.props.parent;
       return (
         <View style={styles.container}>
-        <View style={styles.header}>
-            <Icon name={"account-edit"} type={"MaterialCommunityIcons"} onPress={() =>this.props.navigation.navigate('UpdateParent')} style={{fontSize: 40, marginLeft:20, marginTop:10, color:"white"}}/>
-        </View>
-          <Image style={styles.avatar} source={parent.image ? { uri: parent.image } : {uri:"https://image.flaticon.com/icons/png/512/97/97895.png"}} resizeMode="stretch"/>
-        <View style={styles.body}>
+          <View style={styles.header}>
+            <Icon
+              name={"account-edit"}
+              type={"MaterialCommunityIcons"}
+              onPress={() => this.props.navigation.navigate("UpdateParent")}
+              style={{
+                fontSize: 40,
+                marginLeft: 20,
+                marginTop: 10,
+                color: "white"
+              }}
+            />
+          </View>
+          <Image
+            style={styles.avatar}
+            source={
+              parent.image
+                ? { uri: parent.image }
+                : require("../../assets/man.png")
+            }
+            resizeMode="stretch"
+          />
+          <View style={styles.body}>
             <View style={styles.bodyContent}>
-              <Text style={styles.name}>{`${parent.user.first_name} ${parent.user.last_name}`}</Text>
+              <Text style={styles.name}>{`${parent.user.first_name} ${
+                parent.user.last_name
+              }`}</Text>
               <Text style={styles.info}>{`@${parent.user.username}`}</Text>
               <Text style={styles.description}>{`${parent.user.email}`}</Text>
-              <View  style={styles.description}>
+              <View style={styles.description}>
                 {/* <Icon name={"money"} type={"FontAwesome"} onPress={() =>this.props.navigation.navigate('UpdateParent')} style={{fontSize: 24, marginRight:5, marginTop:2, color:"black"}}/> */}
-              <Text style={{fontSize:25 , marginTop:8}}> 
-                {`${parent.wallet}`}
-              </Text>
-                <Image source={require("../../assets/sr.png")} style={{width:80, height:40}} />
+                <Text style={{ fontSize: 25, marginTop: 8 }}>
+                  {`${parent.wallet}`}
+                </Text>
+                <Image
+                  source={require("../../assets/sr.png")}
+                  style={{ width: 80, height: 40 }}
+                />
               </View>
             </View>
+          </View>
         </View>
-      </View>
       );
     }
   }
@@ -72,9 +105,9 @@ const mapDispatchToProps = dispatch => {
 };
 
 const styles = StyleSheet.create({
-  header:{
+  header: {
     backgroundColor: "#72B7E2",
-    height:200,
+    height: 200
   },
   avatar: {
     width: 130,
@@ -82,63 +115,63 @@ const styles = StyleSheet.create({
     borderRadius: 63,
     borderWidth: 4,
     borderColor: "white",
-    marginBottom:10,
-    alignSelf:'center',
-    position: 'absolute',
-    marginTop:130
+    marginBottom: 10,
+    alignSelf: "center",
+    position: "absolute",
+    marginTop: 130
   },
-  name:{
-    fontSize:22,
-    color:"#48413E",
-    fontWeight:'600',
-  },
-  body:{
-    marginTop:40,
-  },
-  bodyContent: {
-    // flex: 1,
-    marginTop:30,
-    alignItems: 'center',
-    // padding:30,
-  },
-  name:{
-    fontSize:28,
+  name: {
+    fontSize: 22,
     color: "#48413E",
     fontWeight: "600"
   },
-  info:{
-    fontSize:16,
-    color: "#00BFFF",
-    marginTop:10
+  body: {
+    marginTop: 40
   },
-  description:{
-    fontSize:16,
+  bodyContent: {
+    // flex: 1,
+    marginTop: 30,
+    alignItems: "center"
+    // padding:30,
+  },
+  name: {
+    fontSize: 28,
+    color: "#48413E",
+    fontWeight: "600"
+  },
+  info: {
+    fontSize: 16,
+    color: "#00BFFF",
+    marginTop: 10
+  },
+  description: {
+    fontSize: 16,
     color: "#5D5D5D",
-    marginTop:20,
+    marginTop: 20,
     // textAlign: 'center',
     flexDirection: "row",
-    flexWrap: "wrap",
+    flexWrap: "wrap"
   },
   buttonContainer: {
-    height:45,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom:10,
-    width:250,
-    borderRadius:30,
-    backgroundColor: "black",
+    height: 45,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+    width: 250,
+    borderRadius: 30,
+    backgroundColor: "black"
   },
   buttonlogout: {
-    height:45,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom:10,
-    width:250,
-    borderRadius:30,
-    backgroundColor: "red",
-  },
+    height: 45,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+    width: 250,
+    borderRadius: 30,
+    backgroundColor: "red"
+  }
 });
 export default connect(
   mapStateToProps,

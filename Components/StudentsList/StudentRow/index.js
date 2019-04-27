@@ -29,11 +29,12 @@ class StudentRow extends Component {
   render() {
     let student = this.props.student;
     return (
-      <Card style={{ flex: 0,}}>
+      <Card transparent style={{ flex: 0}}>
         <CardItem
           button
-          onPress={() => this.props.navigation.navigate("StudentDetail", {student: student})
-          }> 
+          onPress={() => this.props.navigation.navigate("StudentDetail", {student: student})}
+          style={{backgroundColor:"rgba(255, 255, 255,0.4)"}}
+          > 
           <Body/>
           <Right>
             <View style={{ 
@@ -42,7 +43,7 @@ class StudentRow extends Component {
                 flexWrap: "wrap",
                 justifyContent: "center",
                 }}>
-              <Text style={{fontSize:20 , marginRight:20, marginTop:13}}> {student.name}</Text>         
+              <Text style={{fontSize:20 , marginRight:20, marginTop:13,}}> {student.name}</Text>         
               <Thumbnail source={{ uri: student.image }} />
             </View>
           </Right>

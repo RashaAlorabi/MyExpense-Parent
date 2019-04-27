@@ -16,15 +16,14 @@ import {
 } from "native-base";
 import { connect } from "react-redux";
 import { Icon } from "native-base";
-import { Constants, WebBrowser } from 'expo';
-
+import { Constants, WebBrowser, LinearGradient } from 'expo';
 import * as actionCreators from "../../Store/actions";
 
 class AddToWallet extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "أضافة للمحظة",
-      headerStyle:{backgroundColor:"#3DDDD5"},
+      // headerStyle:{backgroundColor:"#3DDDD5"},
     };
   };
   state = {
@@ -37,35 +36,40 @@ class AddToWallet extends Component {
   render() {
     let parent = this.props.parent;
       return (
+      <LinearGradient
+        colors={['#72B7E2', '#AE8BF1', '#3DDDD5']}
+        style={{ width:"100%", height:"100%"}}>
         <Content>
-        <List>
-          <ListItem style={{ borderBottomWidth: 0 ,marginTop:200}}>
-            <Body>
-            <Form>
-                <Item
-                  floatingLabel
-                  // style={{ backgroundColor: "white", marginTop: 10 }}
-                >
-                <Label style={{textAlign: 'right'}}>أضف المبلغ</Label>
-                  <Input
-                    autoCorrect={false}
-                    // secureTextEntry
-                    autoCapitalize="none"
-                    onChangeText={wallet => this.setState({ wallet })}
-                    // placeholder={this.state.email}
-                  />
-                </Item>
-              </Form>
-            </Body>
-            </ListItem>
-            <View style={{justifyContent: 'center',alignItems: 'center',flexDirection: 'row',}}>
-            <Button rounded success
-            onPress={() => this._handlePressButtonAsync(this.state.wallet, parent.id)}>
-            <Text>أضف</Text>
-          </Button>
-            </View>
-            </List>
-      </Content>
+          <List>
+            <ListItem style={{ borderBottomWidth: 0 ,marginTop:200}}>
+              <Body>
+              <Form style={{backgroundColor: 'rgba(255, 255, 255,0.4)'}}>
+                  <Item
+                    floatingLabel
+                    // style={{ backgroundColor: "white", marginTop: 10 }}
+                  >
+                  <Label style={{textAlign: 'right'}}>أضف المبلغ</Label>
+                    <Input
+                      autoCorrect={false}
+                      // secureTextEntry
+                      autoCapitalize="none"
+                      onChangeText={wallet => this.setState({ wallet })}
+                      // placeholder={this.state.email}
+                    />
+                  </Item>
+              <View style={{justifyContent: 'center',alignItems: 'center',flexDirection: 'row',}}>
+                <Button rounded 
+                    onPress={() => this._handlePressButtonAsync(this.state.wallet, parent.id)}
+                    >
+                  <Text style={{fontSize:20}}>أضف</Text>
+                </Button>
+              </View>
+                </Form>
+              </Body>
+              </ListItem>
+              </List>
+        </Content>
+      </LinearGradient>
       );
   }
 }

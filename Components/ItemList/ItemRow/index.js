@@ -38,7 +38,7 @@ class ItemRow extends Component {
       <View>
         <Row>
           <Col>
-              <CheckBox
+              <CheckBox 
               checked={this.state.checked}
               onPress={() => {
                 !this.state.checked
@@ -47,6 +47,7 @@ class ItemRow extends Component {
                 this.setState({ checked: !this.state.checked });
               }}
               title={item.name}
+              
             />
           </Col>
         </Row>

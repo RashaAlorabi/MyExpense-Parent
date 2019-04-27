@@ -41,10 +41,10 @@ const BottomNav = createBottomTabNavigator(
     }),
     tabBarOptions: {
       showLabel: false,
-      activeTintColor: "white",
-      inactiveTintColor: "black",
+      activeTintColor: "#72B7E2",
+      inactiveTintColor: "#3DDDD5",
       style: {
-        backgroundColor: "#3DDDD5"
+        // backgroundColor: "#72B7E2"
       }
     },
     // headerMode: 'none'

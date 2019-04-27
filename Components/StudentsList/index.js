@@ -12,6 +12,7 @@ import {
   View,
   Text
 } from "native-base";
+import {LinearGradient} from 'expo';
 
 class StudentsList extends Component {
   
@@ -21,7 +22,7 @@ class StudentsList extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "أبنائي",
-      headerStyle:{backgroundColor:"#3DDDD5"},
+      // headerStyle:{backgroundColor:"#3DDDD5"},
     };
   };
   render() {
@@ -35,9 +36,13 @@ class StudentsList extends Component {
     }
 
     return (
-      <View style={{marginTop:10}}>
-        {studentRow}
-      </View>
+      <LinearGradient
+        colors={['#72B7E2', '#AE8BF1', '#3DDDD5']}
+        style={{ width:"100%", height:"100%"}}>           
+        <View style={{marginTop:10}}>
+          {studentRow}
+        </View>
+      </LinearGradient>
     );
   }
 }

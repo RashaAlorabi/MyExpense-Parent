@@ -50,7 +50,7 @@ class ItemList extends Component {
       />
     ));
     return (
-      <Content>
+      <Content style={{backgroundColor:"rgba(255, 255, 255,0.4)"}}>
         {itemsList}
       </Content>
     );

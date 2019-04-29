@@ -19,6 +19,7 @@ import {
   Image
 } from "native-base";
 import OrderHistoryRow from "./orderHistoryRow"
+import { LinearGradient } from "expo";
 class studentOrderHistory extends Component {
 //   static navigationOptions = ({ navigation }) => {
 //     return {
@@ -36,9 +37,14 @@ class studentOrderHistory extends Component {
       OrderHistoryObj = OrderHistory.map(OrderHistory => <OrderHistoryRow orderHistory={OrderHistory} key={OrderHistory.id}/>)
     }
     return (
+      <LinearGradient
+      colors={["#72B7E2", "#AE8BF1", "#3DDDD5"]}
+      style={{ width: "100%", height: "100%" }}
+    >
         <List>
           {OrderHistoryObj}
         </List>
+        </LinearGradient>
     );
   }
 }

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withNavigation } from "react-navigation";
-import OrderHistoryCartItemRow from "./orderHistoryCartItemRow"
+import OrderHistoryCartItemRow from "./orderHistoryCartItemRow";
+import {Collapse, CollapseHeader, CollapseBody} from "accordion-collapse-react-native";
+
 import {
   Container,
   Header,
@@ -14,7 +16,9 @@ import {
   List,
   ListItem,
   Right,
-  Left
+  Left,
+  Accordion,
+  Row,
 } from "native-base";
 
 class OrderHistoryRow extends Component {
@@ -27,19 +31,21 @@ class OrderHistoryRow extends Component {
     let dateYear = orderHistory.order_date.substring(0, 4)
     let dateMonth = orderHistory.order_date.substring(5, 7)
     let dateDay = orderHistory.order_date.substring(8, 10)
-    
+
     return (
-        <List>
+        <Collapse style={{borderBottomWidth:1,borderTopWidth:1}}>
+          <CollapseHeader style={{flexDirection:'row',alignItems:'center',padding:10,backgroundColor:'#E6E6E6', height: 80}}>
+            <Left>
+              <Text>{`${dateYear} ${dateMonth} ${dateDay}`}</Text>
+            </Left>
+            <Right>
+              <Text>{orderHistory.total}</Text>
+            </Right>
+          </CollapseHeader>
+          <CollapseBody style={{alignItems:'center',justifyContent:'center',flexDirection:'row',backgroundColor:'#EDEDED',}}>
             {orderhistorycartitemRow}
-            <ListItem>
-                <Left>
-                    <Text>{`السنة ${dateYear} الشهر ${dateMonth} اليوم ${dateDay}`}</Text>
-                </Left>
-                <Right>
-                    <Text>{orderHistory.total}</Text>
-                </Right>
-            </ListItem>
-        </List>
+          </CollapseBody>
+        </Collapse>
     );
   }
 }

@@ -24,15 +24,13 @@ export const fetchParentProfile = () => {
   };
 };
 
-export const updateParentProfile = (userID, first_name, last_name, email) => {
-  console.log(userID, first_name, last_name, email, "upadte action");
+export const updateParentProfile = (userData, userID) => {
   return async dispatch => {
     try {
-      const res = await instance.put(`parent/${userID}/update/profile/`, {
-        first_name: first_name,
-        last_name: last_name,
-        email: email
-      });
+      const res = await instance.put(
+        `parent/${userID}/update/profile/`,
+        userData
+      );
       const updatedProfile = res.data;
       dispatch({
         type: actionTypes.UPDATE_PROFILE,

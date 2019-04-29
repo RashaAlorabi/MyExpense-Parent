@@ -8,6 +8,7 @@ export {
   addCheckedItem,
   rmCheckedItem,
   setCheckedItem,
+  updateParentProfile
 } from "./parentAction";
 
 export { saveOrderHistory } from "./orderHistory";

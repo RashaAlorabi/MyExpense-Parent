@@ -24,6 +24,27 @@ export const fetchParentProfile = () => {
   };
 };
 
+export const updateParentProfile = (userID, first_name, last_name, email) => {
+  console.log(userID, first_name, last_name, email, "upadte action");
+  return async dispatch => {
+    try {
+      const res = await instance.put(`parent/${userID}/update/profile/`, {
+        first_name: first_name,
+        last_name: last_name,
+        email: email
+      });
+      const updatedProfile = res.data;
+      dispatch({
+        type: actionTypes.UPDATE_PROFILE,
+        payload: updatedProfile
+      });
+      dispatch(fetchParentProfile());
+    } catch (err) {
+      console.error("Error while updating Profile", err);
+    }
+  };
+};
+
 export const updateParentWallet = (parentWallet, parentID) => {
   return async dispatch => {
     try {

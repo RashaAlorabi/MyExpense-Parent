@@ -31,7 +31,6 @@ class UpdateProfile extends Component {
     };
   };
   state = {
-    username: this.props.parent.user.username,
     first_name: this.props.parent.user.first_name,
     last_name: this.props.parent.user.last_name,
     email: this.props.parent.user.email
@@ -177,14 +176,22 @@ class UpdateProfile extends Component {
                 light
                 style={{ fontSize: 50 }}
                 onPress={() =>
-                  this.props.login(this.state, this.props.navigation)
+                  this.props.updateParentProfile(
+                    this.props.parent.user.id,
+                    this.state
+                  )
                 }
               >
                 <Icon
                   name={"save"}
                   type={"FontAwesome"}
                   onPress={() =>
-                    this.props.login(this.state, this.props.navigation)
+                    this.props.updateParentProfile(
+                      this.props.parent.user.id,
+                      this.state.first_name,
+                      this.state.last_name,
+                      this.state.email
+                    )
                   }
                   style={{ color: "black", fontSize: 30 }}
                 />
@@ -206,8 +213,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchParentProfile: () => dispatch(actionCreators.fetchParentProfile()),
-    updateParentWallet: wallet =>
-      dispatch(actionCreators.updateParentWallet(wallet))
+    updateParentProfile: (userID, first_name, last_name, email) =>
+      dispatch(
+        actionCreators.updateParentProfile(userID, first_name, last_name, email)
+      )
   };
 };
 

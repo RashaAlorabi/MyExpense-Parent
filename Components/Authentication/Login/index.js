@@ -18,7 +18,7 @@ import {
 class Login extends Component {
   async componentDidMount() {
     await this.props.checkForToken();
-    if (this.props.user){
+    if (this.props.user) {
       this.props.navigation.replace("BottomNav");
     }
   }
@@ -34,7 +34,7 @@ class Login extends Component {
     return (
       <Container>
         <Header transparent />
-        <List style={{marginTop:200}}>
+        <List style={{ marginTop: 200 }}>
           <ListItem style={{ borderBottomWidth: 0 }}>
             <Body>
               <Form>
@@ -74,9 +74,9 @@ class Login extends Component {
             bordered
             rounded
             onPress={() => this.props.login(this.state, this.props.navigation)}
-            // style={{ backgroundColor: "rgb(95, 130, 182)" }}
+            style={{ width: "93%", marginLeft: "3%", borderColor: "#72B7E2" }}
           >
-            <Text>Login</Text>
+            <Text style={{ color: "#72B7E2" }}>Login</Text>
           </Button>
         </List>
       </Container>

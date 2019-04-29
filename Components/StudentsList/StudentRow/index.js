@@ -29,7 +29,7 @@ class StudentRow extends Component {
   render() {
     let student = this.props.student;
     return (
-      <Card style={{ flex: 0 }}>
+      <Card transparent style={{ flex: 0 }}>
         <CardItem
           button
           onPress={() =>
@@ -37,7 +37,7 @@ class StudentRow extends Component {
               student: student
             })
           }
-          style={{backgroundColor:"rgba(255, 255, 255,0.4)"}}
+          style={{ backgroundColor: "rgba(255, 255, 255,0.4)" }}
         >
           <View
             style={{
@@ -48,7 +48,10 @@ class StudentRow extends Component {
             }}
           >
             <Left />
-            <Text style={{ fontSize: 20, marginTop: 13,  marginRight:20, }}> {student.name}</Text>
+            <Text style={{ fontSize: 20, marginTop: 13, marginRight: 20 }}>
+              {" "}
+              {student.name}
+            </Text>
             <Right>
               <Thumbnail source={{ uri: student.image }} />
             </Right>

@@ -57,7 +57,8 @@ class AddToWallet extends Component {
                         textAlign: "right",
                         color: "black",
                         fontSize: 20,
-                        marginRight: 10
+                        marginRight: 10,
+                        
                       }}
                     >
                       اضف مبلغ
@@ -74,7 +75,9 @@ class AddToWallet extends Component {
                     style={{
                       justifyContent: "center",
                       alignItems: "center",
-                      flexDirection: "row"
+                      flexDirection: "row",
+                      marginTop:10,
+                      marginBottom:10
                     }}
                   >
                     <Button

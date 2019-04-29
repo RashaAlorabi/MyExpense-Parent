@@ -38,9 +38,9 @@ class studentOrderHistory extends Component {
     }
     return (
       <LinearGradient
-      colors={["#72B7E2", "#AE8BF1", "#3DDDD5"]}
-      style={{ width: "100%", height: "100%" }}
-    >
+        colors={["#72B7E2", "#AE8BF1", "#3DDDD5"]}
+        style={{ width: "100%", height: "100%" }}
+      >
         <List>
           {OrderHistoryObj}
         </List>
